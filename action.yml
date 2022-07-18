@@ -100,6 +100,6 @@ runs:
       shell: bash
       
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'  && !inputs.plan_only|| github.ref_type == 'tag'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'  && !inputs.plan_only || github.ref_type == 'tag'
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
