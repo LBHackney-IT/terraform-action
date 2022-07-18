@@ -35,7 +35,7 @@ runs:
         aws-access-key-id: ${{ inputs.aws_access_key }}
         aws-secret-access-key: ${{ inputs.aws_secret_key }}
         role-skip-session-tagging: true
-        
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 
@@ -61,7 +61,7 @@ runs:
       run: terraform plan -var-file='${{ inputs.vars_file }}'
       continue-on-error: true
       shell: bash
-      
+
   # Updates PRs with Plan status if a github token is present
     - name: Update Pull Request
       uses: actions/github-script@v6
@@ -92,13 +92,12 @@ runs:
             repo: context.repo.repo,
             body: output
           })
-         
-          
+
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
       run: exit 1
       shell: bash
-      
+
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'  && !inputs.plan_only || github.ref_type == 'tag'
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
