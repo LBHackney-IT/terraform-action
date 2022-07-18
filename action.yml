@@ -14,6 +14,10 @@ inputs:
   aws_secret_key:
     description: 'AWS secret key'
     required: True
+  plan_only:
+    description: 'True if a plan is the only intended action'
+    type: boolean
+    default: false
   github_token:    
     description: 'GitHub token'
     required: true
@@ -54,7 +58,7 @@ runs:
   # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
-      if: github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request' || github.event_name = 'push' && inputs.plan_only
       run: terraform plan -var-file='tfvars/${{ inputs.environment }}.tfvars' -var 'aws_deploy_region=${{ inputs.aws_deploy_region }}'
       continue-on-error: true
       shell: bash
@@ -93,9 +97,9 @@ runs:
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
       run: exit 1
-      shell: bash
+      shell: bashgithub.ref == 'refs/heads/main' 
       
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'  && !inputs.plan_only|| github.ref_type == 'tag'
       run: terraform apply -auto-approve -var-file='tfvars/${{ inputs.environment }}.tfvars'
       shell: bash
