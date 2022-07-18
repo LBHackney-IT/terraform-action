@@ -28,11 +28,11 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - uses: ./.github/actions/oidc-auth
+      - uses: LBHackney/terraform-action@v1
         with: 
           role_arn: ${{ secrets.DEV_ROLE_ARN }}
-          environment: 'dev'
-          aws_deploy_region: 'eu-west-2'
+          backend_config: backend/cofnig.dev.tfbackend
+          vars_file: tfvars/dev.tfvars
           aws_access_key: ${{ secrets.DEV_AWS_ACCESS_KEY}}
           aws_secret_key: ${{ secrets.DEV_AWS_SECRET_KEY }}
           github_token: ${{secrets.GITHUB_TOKEN}}
@@ -44,11 +44,11 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - uses: /.github/actions/oidc-auth@main
+      - uses: LBHackney/terraform-action@v1
         with: 
           role_arn: ${{ secrets.PROD_ROLE_ARN }}
-          environment: 'prod'
-          aws_deploy_region: 'eu-west-2'
+          backend_config: backend/cofnig.production.tfbackend
+          vars_file: tfvars/production.tfvars
           aws_access_key: ${{ secrets.PROD_AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.PROD_AWS_SECRET_KEY }}
           github_token: ${{secrets.GITHUB_TOKEN}}
