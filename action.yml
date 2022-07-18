@@ -1,5 +1,6 @@
 name: Terraform AWS Action
 
+inputs:
   backend_config:
     description: Location of the terraform config file, including filename
     required: true
