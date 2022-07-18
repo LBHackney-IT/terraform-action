@@ -19,7 +19,6 @@ on:
     paths-ignore:
       - '**/README.md'
       - 'docs/**'
-     # - '.github/**'
 
 jobs:
   DeployDev:
