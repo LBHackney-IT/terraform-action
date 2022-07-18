@@ -8,7 +8,7 @@ Plans run on pull requests, and applies run on merges
 
 # Example Workflow
 ```YAML
-name: OIDC Authentication
+name: Example Workflow
 
 on:
   push:
