@@ -1,10 +1,10 @@
 name: Terraform AWS Action
 
 inputs:
-  environment:  # id of input
+  environment:
     description: 'Environment'
     required: true
-  aws_deploy_region:  # id of input
+  aws_deploy_region: 
     description: 'AWS deployment region'
     required: true
     default: 'eu-west-2'
