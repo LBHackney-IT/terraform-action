@@ -57,7 +57,7 @@ jobs:
       - uses: LBHackney-IT/terraform-action@v1
         with: 
           role_arn: ${{ secrets.DEV_ROLE_ARN }}
-          backend_config: backend/cofnig.dev.tfbackend
+          backend_config: backend/config.dev.tfbackend
           vars_file: tfvars/dev.tfvars
           aws_access_key: ${{ secrets.DEV_AWS_ACCESS_KEY}}
           aws_secret_key: ${{ secrets.DEV_AWS_SECRET_KEY }}
@@ -73,7 +73,7 @@ jobs:
       - uses: LBHackney-IT/terraform-action@v1
         with: 
           role_arn: ${{ secrets.PROD_ROLE_ARN }}
-          backend_config: backend/cofnig.production.tfbackend
+          backend_config: backend/config.production.tfbackend
           vars_file: tfvars/production.tfvars
           aws_access_key: ${{ secrets.PROD_AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.PROD_AWS_SECRET_KEY }}
