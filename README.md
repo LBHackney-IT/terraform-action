@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - uses: LBHackney/terraform-action@v1
+      - uses: LBHackney-IT/terraform-action@v1
         with: 
           role_arn: ${{ secrets.DEV_ROLE_ARN }}
           backend_config: backend/cofnig.dev.tfbackend
@@ -44,7 +44,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - uses: LBHackney/terraform-action@v1
+      - uses: LBHackney-IT/terraform-action@v1
         with: 
           role_arn: ${{ secrets.PROD_ROLE_ARN }}
           backend_config: backend/cofnig.production.tfbackend
