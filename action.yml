@@ -57,7 +57,7 @@ runs:
   # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
-      if: github.event_name == 'pull_request' || github.event_name == 'push' && inputs.plan_only
+      if: github.event_name == 'pull_request' || github.event_name == 'push' 
       run: terraform plan -var-file='${{ inputs.vars_file }}'
       continue-on-error: true
       shell: bash
@@ -99,6 +99,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'  && !inputs.plan_only || github.ref_type == 'tag'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'  && !inputs.plan_only 
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
