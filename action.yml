@@ -64,7 +64,7 @@ runs:
   # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
-      if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name = 'workflow_dispatch'
+      if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
       run: terraform plan -var-file='${{ inputs.vars_file }}'
       continue-on-error: true
       shell: bash
@@ -106,6 +106,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: github.event_name == 'push' && inputs.plan_only == false || github.event_name = 'workflow_dispatch' && inputs.plan_only == false
+      if: github.event_name == 'push' && inputs.plan_only == false || github.event_name == 'workflow_dispatch' && inputs.plan_only == false
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
