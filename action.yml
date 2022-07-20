@@ -106,6 +106,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: github.event_name == 'push' && input.plan_only == false
+      if: github.event_name == 'push' && inputs.plan_only == false
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
