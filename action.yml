@@ -29,7 +29,9 @@ runs:
   steps:
     - name: test
       run:  |
+        echo "inputs:"
         echo ${{ inputs.plan_only }}
+        echo "event inputs:"
         echo ${{ github.event.inputs.plan_only}}
       shell: bash
     - name: Configure AWS Credentials
