@@ -33,6 +33,8 @@ runs:
         echo ${{ inputs.plan_only }}
         echo "event inputs:"
         echo ${{ github.event.inputs.plan_only}}
+        echo "event name:"
+        echo ${{github.event_name }}
       shell: bash
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
