@@ -20,6 +20,10 @@ Plans run on pull requests, and applies run on merges or a tag.
   aws_secret_key:
     description: AWS secret key
     required: True
+  aws_region:
+    description: Region to assume role with
+    required: false
+    default: eu-west-2
   plan_only:
     description: true if a plan is the only intended action
     type: boolean
