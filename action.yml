@@ -27,10 +27,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: print var
+    - name: plan
       if: github.event.inputs.plan_only 
       run:  |
         echo "plan only!"
+    - name: no plan
       shell: bash
       if: ${{ ! github.event.inputs.plan_only }}
       run: |
