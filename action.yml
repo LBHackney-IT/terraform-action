@@ -28,7 +28,13 @@ runs:
   using: "composite"
   steps:
     - name: print var
-      run: echo ${{ github.event.inputs.plan_only }}
+      if: github.event.inputs.plan_only 
+      run:  |
+        echo "plan only!"
+      shell: bash
+      if: ! github.event.inputs.plan_only
+      run: |
+        echo "not plan only!"
       shell: bash
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
