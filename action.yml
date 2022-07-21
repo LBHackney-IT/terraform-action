@@ -99,6 +99,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: github.event_name == 'workflow_dispatch' 
+      if: github.event_name == 'workflow_dispatch' && github.event.inputs.plan_only == false
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
