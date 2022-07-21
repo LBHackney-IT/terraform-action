@@ -34,6 +34,10 @@ Plans run on pull requests, and applies run on merges or a tag.
   role_arn:
     description: Full ARN of role to assume
     required: true
+  checkov_dir:
+    description: Directory to run checkov checks against
+    required: false
+    default: '.'
 ```
 
 # Example Workflow

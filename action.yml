@@ -27,6 +27,10 @@ inputs:
   role_arn:
     description: Full ARN of role to assume
     required: true
+  checkov_dir:
+    description: Directory to run checkov checks against
+    required: false
+    default: '.'
 
 runs:
   using: "composite"
@@ -35,7 +39,7 @@ runs:
       id: checkov
       uses: bridgecrewio/checkov-action@master
       with:
-        directory: LBHackney-IT/terraform-action
+        directory: ${{ inputs.checkov_dir }}
         framework: terraform
 
     - name: Configure AWS Credentials
