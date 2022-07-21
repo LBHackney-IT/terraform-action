@@ -27,6 +27,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: print var
+      run: echo ${{ github.event.inputs.plan_only }}
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
