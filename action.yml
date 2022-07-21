@@ -31,8 +31,8 @@ runs:
       if: github.event.inputs.plan_only 
       run:  |
         echo "plan only!"
-    - name: no plan
       shell: bash
+    - name: no plan
       if: ${{ ! github.event.inputs.plan_only }}
       run: |
         echo "not plan only!"
