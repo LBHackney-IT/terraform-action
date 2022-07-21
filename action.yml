@@ -32,7 +32,7 @@ runs:
       run:  |
         echo "plan only!"
       shell: bash
-      if: ! github.event.inputs.plan_only
+      if: ${{ ! github.event.inputs.plan_only }}
       run: |
         echo "not plan only!"
       shell: bash
