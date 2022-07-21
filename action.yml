@@ -31,6 +31,13 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Test with Checkov
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: LBHackney-IT/terraform-action
+        framework: terraform
+
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
