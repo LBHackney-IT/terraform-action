@@ -19,8 +19,8 @@ inputs:
     default: eu-west-2
   plan_only:
     description: true if a plan is the only intended action
-    type: string
-    default: 'false'
+    type: boolean
+    default: false
   github_token:    
     description: GitHub token for updating pull requests with plan output
     required: false
