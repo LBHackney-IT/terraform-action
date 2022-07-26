@@ -20,6 +20,10 @@ Plans run on pull requests, and applies run on merges or a tag.
   aws_secret_key:
     description: AWS secret key
     required: True
+  aws_region:
+    description: Region to assume role with
+    required: false
+    default: eu-west-2
   plan_only:
     description: true if a plan is the only intended action
     type: boolean
@@ -30,6 +34,10 @@ Plans run on pull requests, and applies run on merges or a tag.
   role_arn:
     description: Full ARN of role to assume
     required: true
+  checkov_dir:
+    description: Directory to run checkov checks against
+    required: false
+    default: '.'
 ```
 
 # Example Workflow
@@ -46,6 +54,12 @@ on:
       - '**/README.md'
       - 'docs/**'
 
+  workflow_dispatch:
+    inputs:
+      plan_only:
+        type: boolean
+        default: false 
+
 jobs:
   DeployDev:
     name: Deploy to Dev 
@@ -61,6 +75,7 @@ jobs:
           vars_file: tfvars/dev.tfvars
           aws_access_key: ${{ secrets.DEV_AWS_ACCESS_KEY}}
           aws_secret_key: ${{ secrets.DEV_AWS_SECRET_KEY }}
+          plan_only: ${{ github.event.inputs.plan_only }}
           github_token: ${{secrets.GITHUB_TOKEN}}
 
   DeployProd:
@@ -77,6 +92,7 @@ jobs:
           vars_file: tfvars/production.tfvars
           aws_access_key: ${{ secrets.PROD_AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.PROD_AWS_SECRET_KEY }}
+          plan_only: ${{ github.event.inputs.plan_only }}
           github_token: ${{secrets.GITHUB_TOKEN}}
 
 ```
