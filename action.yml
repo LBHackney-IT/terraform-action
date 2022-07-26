@@ -41,6 +41,7 @@ runs:
       with:
         directory: ${{ inputs.checkov_dir }}
         framework: terraform
+        check: MEDIUM
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
