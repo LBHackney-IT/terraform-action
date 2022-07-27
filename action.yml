@@ -17,10 +17,6 @@ inputs:
     description: Region to assume role with
     required: false
     default: eu-west-2
-  plan_only:
-    description: true if a plan is the only intended action
-    type: string
-    default: 'false'
   github_token:    
     description: GitHub token for updating pull requests with plan output
     required: false
@@ -35,11 +31,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: print
-      if: ${{ github.event.inputs.plan_only == 'false' }}
-      run: "echo ${{ github.event_name }} "
-      shell: bash 
-
     - name: Test with Checkov
       id: checkov
       uses: bridgecrewio/checkov-action@master
@@ -120,6 +111,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: fromJSON(github.event.inputs.plan_only) == 'false' && github.event_name == 'push' || fromJSON(github.event.inputs.plan_only) == 'false' && github.ref_type == 'tag'
+      if: github.event_name == 'push' || github.ref_type == 'tag'
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
