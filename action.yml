@@ -37,7 +37,7 @@ runs:
   steps:
     - name: print
       if: ${{ github.event.inputs.plan_only == false }}
-      run: "echo false"
+      run: "echo ${{ github.event_name }} "
       shell: bash 
 
     - name: Test with Checkov
