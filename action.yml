@@ -37,7 +37,7 @@ runs:
   steps:
     - name: print
       if: fromJSON(github.event.inputs.plan_only) != false 
-      run: echo ${{ "not false" }}
+      run: echo ${{ 'not false' }}
       shell: bash 
 
     - name: Test with Checkov
