@@ -36,7 +36,7 @@ runs:
   using: "composite"
   steps:
     - name: print
-      if: ${{ fromJSON(github.event.inputs.plan_only) != false }}
+      if: ${{ github.event.inputs.plan_only != false }}
       run: "echo not false"
       shell: bash 
 
