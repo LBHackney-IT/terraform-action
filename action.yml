@@ -120,6 +120,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: fromJSON(github.event.inputs.plan_only) == false && github.event_name == 'push' || fromJSON(github.event.inputs.plan_only) == false && github.ref_type == 'tag'|| github.event.inputs.plan_only == false && github.event_name == 'push' 
+      if: github.event.inputs.plan_only == false && github.event_name == 'push' || github.event.inputs.plan_only == false && github.ref_type == 'tag'
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
