@@ -36,7 +36,7 @@ runs:
   using: "composite"
   steps:
     - name: print
-      run: echo  fromJSON( ${{ github.event.inputs.plan_only}} )
+      run: echo  fromJSON(github.event.inputs.plan_only)
       shell: bash 
 
     - name: Test with Checkov
