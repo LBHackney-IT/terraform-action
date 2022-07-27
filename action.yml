@@ -38,7 +38,8 @@ runs:
     - name: print
       run:
         echo ${{ inputs.plan_only }}
-    
+      shell: bash 
+      
     - name: Test with Checkov
       id: checkov
       uses: bridgecrewio/checkov-action@master
