@@ -36,8 +36,9 @@ runs:
   using: "composite"
   steps:
     - name: print
+      if: fromJSON(github.event.inputs.plan_only) != false 
       run:
-        echo ${{ fromJSON(inputs.plan_only) }}
+        echo ${{ "not false" }}
       shell: bash 
 
     - name: Test with Checkov
