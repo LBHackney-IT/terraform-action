@@ -19,8 +19,8 @@ inputs:
     default: eu-west-2
   plan_only:
     description: true if a plan is the only intended action
-    type: boolean
-    default: false
+    type: string
+    default: 'false'
   github_token:    
     description: GitHub token for updating pull requests with plan output
     required: false
@@ -36,7 +36,7 @@ runs:
   using: "composite"
   steps:
     - name: print
-      if: ${{ github.event.inputs.plan_only == false }}
+      if: ${{ github.event.inputs.plan_only == 'false' }}
       run: "echo ${{ github.event_name }} "
       shell: bash 
 
@@ -120,6 +120,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: github.event.inputs.plan_only == false && github.event_name == 'push' || github.event.inputs.plan_only == false && github.ref_type == 'tag'
+      if: github.event.inputs.plan_only == 'false' && github.event_name == 'push' || github.event.inputs.plan_only == 'false' && github.ref_type == 'tag'
       run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
       shell: bash
