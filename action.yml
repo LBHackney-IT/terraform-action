@@ -59,7 +59,9 @@ runs:
            set -e
            echo -e "\n"
            FMT_STATUS=$(<fmt.status)
-           if [ $FMT_STATUS == "1" ]; then
+
+           if [ $FMT_STATUS == "1" ]
+           then
               echo "Formatting error. Please run terraform fmt before pushing your code."
            fi  
       shell: bash
