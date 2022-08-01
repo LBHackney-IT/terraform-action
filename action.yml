@@ -55,9 +55,9 @@ runs:
     - name: Terraform Format
       id: check_formating
       run: terraform fmt -check
-           FMT_STATUS=$(<fmt.status)
            set -e
            echo -e "\n"
+           FMT_STATUS=$(<fmt.status)
            if [ $FMT_STATUS == "1" ]; then
               echo "Formatting error. Please run terraform fmt before pushing your code."
            fi  
