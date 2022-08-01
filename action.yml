@@ -54,13 +54,11 @@ runs:
   # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       id: check_formating
-      run: terraform fmt -check -out=fmt.out -detailed-exitcode
-           echo "$?" > fmt.status
+      run: terraform fmt -check -detailed-exitcode
+           echo "$?" > FMT_STATUS
            set -e
            echo -e "\n"
-           FMT_STATUS=$(<fmt.status)
-
-           if [ $FMT_STATUS == "1" ]
+           if [ FMT_STATUS == "1" ]
            then
               echo "Formatting error. Please run terraform fmt before pushing your code."
            fi  
