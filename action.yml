@@ -55,14 +55,14 @@ runs:
     - name: Terraform Format
       id: check_formating
       run: terraform fmt -check
-      continue-on-error: true
+           FMT_STATUS=$(<fmt.status)
+           if [ $FMT_STATUS == "1" ]; then
+              echo "Formatting error. Please run terraform fmt before pushing your code."
+              exit 1
+           fi  
       shell: bash
 
-    - name: Terraform Formatting Check
-      if: job.steps.check_formating.status == failure()
-      run: echo "Formatting error. Please run terraform fmt before pushing your code."
-           exit 1
-      shell: bash     
+    
 
   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
