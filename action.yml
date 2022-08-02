@@ -1,4 +1,4 @@
-name: Terraform AWS Action
+name: Terraform AWS Action 
 
 inputs:
   backend_config:
@@ -53,7 +53,14 @@ runs:
 
   # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
-      run: terraform fmt -check
+      id: check_formating
+      run: terraform fmt -check  
+      continue-on-error: true  
+      shell: bash
+
+    - name: Terraform Format Status
+      if: steps.check_formating.outcome != 'success'
+      run: echo "Formatting error. Please run terraform fmt before pushing your code."; exit 1
       shell: bash
 
   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
