@@ -55,7 +55,7 @@ runs:
     - name: Terraform Format
       id: check_formating
       run: terraform fmt -check -detailed-exitcode
-           echo "$?" > FMT_STATUS
+           echo "$?" 
            set -e
            echo -e "\n"
            if [ FMT_STATUS == "1" ]
