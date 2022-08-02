@@ -63,11 +63,6 @@ runs:
       run: echo "Formatting error. Please run terraform fmt before pushing your code."; exit 1
       shell: bash
 
-    - name: Terraform Format Status Failure
-      if: steps.check_formating.outcome != 'success'
-      run: exit 1
-      shell: bash  
-
   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init -backend-config='${{ inputs.backend_config }}'
