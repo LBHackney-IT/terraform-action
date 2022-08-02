@@ -1,4 +1,4 @@
-name: Terraform AWS Action
+name: Terraform AWS Action 
 
 inputs:
   backend_config:
