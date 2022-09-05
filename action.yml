@@ -78,7 +78,7 @@ runs:
     - name: Terraform Plan
       id: plan
       if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-      run: terraform plan -var-file='${{ inputs.vars_file }}' -no-color
+      run: terraform plan -var-file='${{ inputs.vars_file }}' -input=false -no-color -detailed-exitcode
       continue-on-error: true
       shell: bash
 
@@ -120,5 +120,5 @@ runs:
 
     - name: Terraform Apply
       if: github.event_name == 'push' || github.ref_type == 'tag'
-      run: terraform apply -auto-approve -var-file='${{ inputs.vars_file }}'
+      run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -detailed-exitcode -auto-approve
       shell: bash
