@@ -120,5 +120,5 @@ runs:
 
     - name: Terraform Apply
       if: github.event_name == 'push' || github.ref_type == 'tag'
-      run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -detailed-exitcode -auto-approve
+      run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -auto-approve
       shell: bash
