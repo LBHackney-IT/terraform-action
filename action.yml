@@ -7,16 +7,6 @@ inputs:
   vars_file:
     description: Location of the TFVars file, including filename
     required: true
-  aws_access_key: 
-    description: AWS access key
-    required: True
-  aws_secret_key:
-    description: AWS secret key
-    required: True
-  aws_region:
-    description: Region to assume role with
-    required: false
-    default: eu-west-2
   github_token:    
     description: GitHub token for updating pull requests with plan output
     required: false
