@@ -14,20 +14,6 @@ Plans run on pull requests, and applies run on merges or a tag.
   vars_file:
     description: Location of the TFVars file, including filename
     required: true
-  aws_access_key: 
-    description: AWS access key
-    required: True
-  aws_secret_key:
-    description: AWS secret key
-    required: True
-  aws_region:
-    description: Region to assume role with
-    required: false
-    default: eu-west-2
-  plan_only:
-    description: true if a plan is the only intended action
-    type: boolean
-    default: false
   github_token:    
     description: GitHub token for updating pull requests with plan output
     required: false
@@ -67,12 +53,8 @@ jobs:
         uses: actions/checkout@v3
       - uses: LBHackney-IT/terraform-action@v1
         with: 
-          role_arn: ${{ secrets.DEV_ROLE_ARN }}
           backend_config: backend/config.dev.tfbackend
           vars_file: tfvars/dev.tfvars
-          aws_access_key: ${{ secrets.DEV_AWS_ACCESS_KEY}}
-          aws_secret_key: ${{ secrets.DEV_AWS_SECRET_KEY }}
-          plan_only: ${{ github.event.inputs.plan_only }}
           github_token: ${{secrets.GITHUB_TOKEN}}
 
   DeployProd:
@@ -84,12 +66,8 @@ jobs:
         uses: actions/checkout@v3
       - uses: LBHackney-IT/terraform-action@v1
         with: 
-          role_arn: ${{ secrets.PROD_ROLE_ARN }}
           backend_config: backend/config.production.tfbackend
           vars_file: tfvars/production.tfvars
-          aws_access_key: ${{ secrets.PROD_AWS_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.PROD_AWS_SECRET_KEY }}
-          plan_only: ${{ github.event.inputs.plan_only }}
           github_token: ${{secrets.GITHUB_TOKEN}}
 
 ```
