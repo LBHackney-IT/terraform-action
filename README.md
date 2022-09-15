@@ -31,9 +31,6 @@ Plans run on pull requests, and applies run on merges or a tag.
   github_token:    
     description: GitHub token for updating pull requests with plan output
     required: false
-  role_arn:
-    description: Full ARN of role to assume
-    required: true
   checkov_dir:
     description: Directory to run checkov checks against
     required: false
