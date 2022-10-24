@@ -20,7 +20,7 @@ runs:
   steps:
     - name: Test with Checkov
       id: checkov
-      uses: bridgecrewio/checkov-action@master
+      uses: bridgecrewio/checkov-action@v12.1810.0
       with:
         directory: ${{ inputs.checkov_dir }}
         framework: terraform
