@@ -14,6 +14,10 @@ inputs:
     description: Directory to run checkov checks against
     required: false
     default: '.'
+  apply:
+    description: whether to run a plan or an apply
+    required: true
+    default: 'false'
 
 runs:
   using: "composite"
@@ -97,6 +101,6 @@ runs:
       shell: bash
 
     - name: Terraform Apply
-      if: github.event_name == 'push' || github.ref_type == 'tag'
+      if: inputs.apply == 'true'
       run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -auto-approve
       shell: bash
