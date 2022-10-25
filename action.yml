@@ -15,9 +15,13 @@ inputs:
     required: false
     default: '.'
   apply:
-    description: whether to run a plan or an apply
+    description: Whether to run an apply or not
     required: true
     default: 'false'
+  plan:
+    description: Whether to run a plan or not
+    required: true
+    default: 'true'
 
 runs:
   using: "composite"
@@ -59,7 +63,7 @@ runs:
   # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
-      if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+      if: inputs.plan == 'true' 
       run: terraform plan -var-file='${{ inputs.vars_file }}' -input=false -no-color
       continue-on-error: true
       shell: bash
