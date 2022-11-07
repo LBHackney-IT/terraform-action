@@ -22,12 +22,17 @@ inputs:
     description: Whether to run a plan or not
     required: true
     default: 'true'
+  terraform_token:
+    description: token to allow external modules
+    required: false
+    default: false
 
 runs:
   using: "composite"
   steps:
     - name: Set Github Auth
-      run: git config --global url."https://oauth2:${{ secrets.TERRAFORM_SECRET_TOKEN }}@github.com".insteadOf https://github.com
+      if: inputs.terraform_token != false
+      run: git config --global url."https://oauth2:${{ inputs.terraform_token }}@github.com".insteadOf https://github.com
     - name: Test with Checkov
       id: checkov
       uses: bridgecrewio/checkov-action@v12.1810.0
