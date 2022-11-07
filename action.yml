@@ -26,6 +26,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Set Github Auth
+      run: git config --global url."https://oauth2:${{ secrets.TERRAFORM_SECRET_TOKEN }}@github.com".insteadOf https://github.com
     - name: Test with Checkov
       id: checkov
       uses: bridgecrewio/checkov-action@v12.1810.0
