@@ -26,10 +26,18 @@ inputs:
     description: token to allow external modules
     required: false
     default: 'false'
+  terraform_version:
+    description: Version of terraform to run
+    required: false
+    default: 1.4.0
 
 runs:
   using: "composite"
   steps:
+    - name: hashicorp/setup-terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ inputs.terraform_version }}
     - name: Set Github Auth
       if: inputs.terraform_token != 'false'
       run: git config --global url."https://oauth2:${{ inputs.terraform_token }}@github.com".insteadOf https://github.com
