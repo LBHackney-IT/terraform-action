@@ -1,4 +1,4 @@
-name: Terraform AWS Action 
+name: Terraform AWS Action
 
 inputs:
   backend_config:
@@ -7,7 +7,7 @@ inputs:
   vars_file:
     description: Location of the TFVars file, including filename
     required: true
-  github_token:    
+  github_token:
     description: GitHub token for updating pull requests with plan output
     required: false
   checkov_dir:
@@ -51,14 +51,11 @@ runs:
         framework: terraform
         check: MEDIUM
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-
   # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       id: check_formatting
       run: terraform fmt -check
-      continue-on-error: true  
+      continue-on-error: true
       shell: bash
 
     - name: Terraform Format Status
@@ -80,7 +77,7 @@ runs:
   # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
-      if: inputs.plan == 'true' 
+      if: inputs.plan == 'true'
       run: terraform plan -var-file='${{ inputs.vars_file }}' -input=false -no-color
       continue-on-error: true
       shell: bash
@@ -98,17 +95,17 @@ runs:
           #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
           #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
           #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-          
+
           <details><summary>Show Plan</summary>
-          
+
           \`\`\`\n
           ${process.env.PLAN}
           \`\`\`
-          
+
           </details>
-            
+
           *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-          
+
           github.rest.issues.createComment({
             issue_number: context.issue.number,
             owner: context.repo.owner,
