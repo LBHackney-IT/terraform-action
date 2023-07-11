@@ -126,9 +126,3 @@ runs:
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
       run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -auto-approve ${{ inputs.extra_terraform_vars }}
       shell: bash
-
-    - name: replace
-      run: |
-        sed
-        sedsed
-      shell: bash
