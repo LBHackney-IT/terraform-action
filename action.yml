@@ -22,6 +22,10 @@ inputs:
     description: Whether to run a plan or not
     required: true
     default: 'true'
+  destroy:
+    description: Whether to run destroy or not
+    required: true 
+    default: false  
   terraform_token:
     description: token to allow external modules
     required: false
@@ -121,4 +125,9 @@ runs:
     - name: Terraform Apply
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
       run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -auto-approve
+      shell: bash
+
+    - name: Terraform Destroy
+      if:  inputs.destroy  
+      runs: terraform destroy auto-approve
       shell: bash
