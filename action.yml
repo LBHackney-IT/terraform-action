@@ -22,6 +22,10 @@ inputs:
     description: Whether to run a plan or not
     required: true
     default: 'true'
+  destroy:
+    description: Whether to run destroy or not
+    required: false
+    default: false  
   terraform_token:
     description: token to allow external modules
     required: false
@@ -117,6 +121,11 @@ runs:
       if: steps.plan.outcome == 'failure'
       run: exit 1
       shell: bash
+
+    - name: Terraform Destroy
+      if:  inputs.destroy == 'true'
+      runs: terraform destroy auto-approve
+      shell: bash   
 
     - name: Terraform Apply
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
