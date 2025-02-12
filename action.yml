@@ -24,7 +24,7 @@ inputs:
     default: 'true'
   destroy:
     description: Whether to run destroy or not
-    required: true 
+    required: false
     default: false  
   terraform_token:
     description: token to allow external modules
