@@ -4,7 +4,7 @@ Configures credentials and runs terraform commands in a Github Action.
 # Usage
 Use this when following feature branch development (Guide TBC) and want to deploy IAC using Terraform
 
-Plans run on pull requests, and applies run on merges or a tag. 
+Plans run on pull requests, and applies run on merges or a tag
 
 # Inputs
 ```YAML
