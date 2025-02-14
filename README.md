@@ -1,4 +1,4 @@
-# Terraform Action for AWS
+# Terraform Action for AWS.
 Configures credentials and runs terraform commands in a Github Action.
 
 # Usage
