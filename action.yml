@@ -124,7 +124,7 @@ runs:
 
     - name: Terraform Destroy
       if:  inputs.destroy == 'true'
-      runs: terraform destroy auto-approve
+      run: terraform destroy auto-approve
       shell: bash   
 
     - name: Terraform Apply
