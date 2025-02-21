@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.4.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.3.0...v5.4.0) (2025-02-21)
+
+
+### Features
+
+* ammending destroy action ([#38](https://github.com/LBHackney-IT/terraform-action/issues/38)) ([61d59d3](https://github.com/LBHackney-IT/terraform-action/commit/61d59d333090dab88d824fec53179a805b23950d))
+
 ## [5.3.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.2.0...v5.3.0) (2025-02-14)
 
 
