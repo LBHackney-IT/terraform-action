@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.8.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.7.0...v5.8.0) (2025-02-24)
+
+
+### Features
+
+* reverting changes ([#44](https://github.com/LBHackney-IT/terraform-action/issues/44)) ([9294fbc](https://github.com/LBHackney-IT/terraform-action/commit/9294fbca9f018768f7b12411dd5778f8e0ba9531))
+
 ## [5.7.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.6.0...v5.7.0) (2025-02-21)
 
 
