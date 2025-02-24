@@ -35,7 +35,7 @@ inputs:
     required: false
     default: 1.4.0
 
-run:
+runs:
   using: "composite"
   steps:
     - name: hashicorp/setup-terraform
