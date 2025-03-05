@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.9.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.8.0...v5.9.0) (2025-03-05)
+
+
+### Features
+
+* updating destroy flag ([#46](https://github.com/LBHackney-IT/terraform-action/issues/46)) ([f78c9e8](https://github.com/LBHackney-IT/terraform-action/commit/f78c9e86054ee99a458c9c4b0c6fef640466a37d))
+
 ## [5.8.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.7.0...v5.8.0) (2025-02-24)
 
 
