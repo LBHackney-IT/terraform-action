@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.9.0...v6.0.0) (2025-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* pass in vars_file to destroy command ([#48](https://github.com/LBHackney-IT/terraform-action/issues/48))
+
+### Features
+
+* pass in vars_file to destroy command ([#48](https://github.com/LBHackney-IT/terraform-action/issues/48)) ([88a48d7](https://github.com/LBHackney-IT/terraform-action/commit/88a48d7b0aafd41b761e3fedc9d571b12d59ce32))
+
 ## [5.9.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.8.0...v5.9.0) (2025-03-05)
 
 
