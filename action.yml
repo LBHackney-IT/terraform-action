@@ -124,10 +124,10 @@ runs:
 
     - name: Terraform Destroy
       if:  inputs.destroy == 'true'
-      run: terraform destroy -var-file='${{ inputs.vars_file }}' -input=false -no-color -auto-approve
+      run: terraform destroy -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -input=false -no-color -auto-approve
       shell: bash   
 
     - name: Terraform Apply
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
-      run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -auto-approve
+      run: terraform apply -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -input=false -no-color -auto-approve
       shell: bash
