@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.0.0](https://github.com/LBHackney-IT/terraform-action/compare/v6.0.0...v7.0.0) (2025-07-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* adds command line vars for repository_id and repository, which are passed in from the workflow by accessing the github context object so they wont need to manually be added to resources
+
+### Features
+
+* adds command line vars for repository_id and repository, which are passed in from the workflow by accessing the github context object so they wont need to manually be added to resources ([5fae6b6](https://github.com/LBHackney-IT/terraform-action/commit/5fae6b637cf2e44408f3e321575fdd25438cd198))
+
 ## [6.0.0](https://github.com/LBHackney-IT/terraform-action/compare/v5.9.0...v6.0.0) (2025-05-06)
 
 
