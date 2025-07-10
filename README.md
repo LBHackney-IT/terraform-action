@@ -14,7 +14,6 @@ variable "repository" {
   type        = string
   description = "Name of the current repository, value is populated during acton run, please do not define in TFVars"
 }
-
 ```
 These should be used in the default_tags block of your AWS provider for the Repository and Repository_Id tags.
 
