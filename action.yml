@@ -34,6 +34,10 @@ inputs:
     description: Version of terraform to run
     required: false
     default: 1.4.0
+  cli_flags:
+    description: Additional CLI flags to pass to terraform commands
+    required: false
+    default: ''
 
 runs:
   using: "composite"
