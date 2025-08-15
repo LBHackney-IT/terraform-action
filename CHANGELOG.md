@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.1.0](https://github.com/LBHackney-IT/terraform-action/compare/v7.0.0...v7.1.0) (2025-08-15)
+
+
+### Features
+
+* updating terraform action with an input for cli_flags ([#52](https://github.com/LBHackney-IT/terraform-action/issues/52)) ([20e8ca5](https://github.com/LBHackney-IT/terraform-action/commit/20e8ca575c362521a79b0a3c507a60f621e71170))
+
 ## [7.0.0](https://github.com/LBHackney-IT/terraform-action/compare/v6.0.0...v7.0.0) (2025-07-10)
 
 
