@@ -22,6 +22,10 @@ inputs:
     description: Whether to run a plan or not
     required: true
     default: 'true'
+  destroy:
+    description: Whether to run destroy or not
+    required: false
+    default: 'false'  
   terraform_token:
     description: token to allow external modules
     required: false
@@ -34,6 +38,10 @@ inputs:
     description: directory to run terraform in
     required: false
     default: .
+  cli_flags:
+    description: Additional CLI flags to pass to terraform commands
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -86,7 +94,7 @@ runs:
     - name: Terraform Plan
       id: plan
       if: inputs.plan == 'true'
-      run: terraform plan -var-file='${{ inputs.vars_file }}' -input=false -no-color
+      run: terraform plan -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color
       continue-on-error: true
       shell: bash
       working-directory: ${{ inputs.directory }}
@@ -128,8 +136,14 @@ runs:
       shell: bash
       working-directory: ${{ inputs.directory }}
 
+    - name: Terraform Destroy
+      if:  inputs.destroy == 'true'
+      run: terraform destroy -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color -auto-approve
+      shell: bash   
+      working-directory: ${{ inputs.directory }}
+
     - name: Terraform Apply
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
-      run: terraform apply -var-file='${{ inputs.vars_file }}' -input=false -no-color -auto-approve
+      run: terraform apply -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color -auto-approve
       shell: bash
       working-directory: ${{ inputs.directory }}

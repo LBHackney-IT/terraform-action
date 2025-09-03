@@ -1,10 +1,26 @@
 # Terraform Action for AWS
-Configures credentials and runs terraform commands in a Github Action
+Configures credentials and runs terraform commands in a Github Action.
+
+# Requirements
+In order to use this action your terraform code will need to define the following variables:
+
+hcl```
+variable "repository_id" {
+  type        = string
+  description = "Id of the current repository, value is populated during acton run, please do not define in TFVars"
+}
+
+variable "repository" {
+  type        = string
+  description = "Name of the current repository, value is populated during acton run, please do not define in TFVars"
+}
+```
+These should be used in the default_tags block of your AWS provider for the Repository and Repository_Id tags.
 
 # Usage
 Use this when following feature branch development (Guide TBC) and want to deploy IAC using Terraform
 
-Plans run on pull requests, and applies run on merges or a tag. 
+Plans run on pull requests, and applies run on merges or a tag
 
 # Inputs
 ```YAML
