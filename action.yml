@@ -34,6 +34,10 @@ inputs:
     description: Version of terraform to run
     required: false
     default: 1.4.0
+  directory:
+    description: directory to run terraform in
+    required: false
+    default: .
   cli_flags:
     description: Additional CLI flags to pass to terraform commands
     required: false
@@ -65,22 +69,26 @@ runs:
       run: terraform fmt -check
       continue-on-error: true
       shell: bash
+      working-directory: ${{ inputs.directory }}
 
     - name: Terraform Format Status
       if: steps.check_formatting.outcome != 'success'
       run: echo "Formatting error. Please run terraform fmt before pushing your code."; exit 1
       shell: bash
+      working-directory: ${{ inputs.directory }}
 
   # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       id: init
       run: terraform init -backend-config='${{ inputs.backend_config }}'
       shell: bash
+      working-directory: ${{ inputs.directory }}
 
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
       shell: bash
+      working-directory: ${{ inputs.directory }}
 
   # Generates an execution plan for Terraform
     - name: Terraform Plan
@@ -89,6 +97,7 @@ runs:
       run: terraform plan -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color
       continue-on-error: true
       shell: bash
+      working-directory: ${{ inputs.directory }}
 
   # Updates PRs with Plan status if a github token is present
     - name: Update Pull Request
@@ -125,13 +134,16 @@ runs:
       if: steps.plan.outcome == 'failure'
       run: exit 1
       shell: bash
+      working-directory: ${{ inputs.directory }}
 
     - name: Terraform Destroy
       if:  inputs.destroy == 'true'
       run: terraform destroy -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color -auto-approve
       shell: bash   
+      working-directory: ${{ inputs.directory }}
 
     - name: Terraform Apply
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
       run: terraform apply -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color -auto-approve
       shell: bash
+      working-directory: ${{ inputs.directory }}
