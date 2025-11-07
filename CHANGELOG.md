@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.2.0](https://github.com/LBHackney-IT/terraform-action/compare/v7.1.0...v7.2.0) (2025-11-07)
+
+
+### Features
+
+* add working directory option to shell commands so terraform can run in a directory ([f732179](https://github.com/LBHackney-IT/terraform-action/commit/f732179b9518130521e477e6f3c22d211eabbabc))
+* add working directory option to shell commands so terraform can… ([#16](https://github.com/LBHackney-IT/terraform-action/issues/16)) ([f732179](https://github.com/LBHackney-IT/terraform-action/commit/f732179b9518130521e477e6f3c22d211eabbabc))
+
 ## [7.1.0](https://github.com/LBHackney-IT/terraform-action/compare/v7.0.0...v7.1.0) (2025-08-15)
 
 
