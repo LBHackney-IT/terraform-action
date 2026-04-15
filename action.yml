@@ -144,6 +144,6 @@ runs:
 
     - name: Terraform Apply
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
-      run: terraform apply -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color -auto-approve
+      run: terraform apply -input=false -no-color -auto-approve tfplan
       shell: bash
       working-directory: ${{ inputs.directory }}
