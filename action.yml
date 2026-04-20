@@ -62,7 +62,6 @@ runs:
         directory: ${{ inputs.checkov_dir }}
         framework: terraform
         soft_fail: false
-        hard_fail_on: MEDIUM
 
   # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
