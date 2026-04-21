@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.3.0](https://github.com/LBHackney-IT/terraform-action/compare/v7.2.0...v7.3.0) (2026-04-21)
+
+
+### Features
+
+* updating terraform plan step in action.yml to use outfile ([#56](https://github.com/LBHackney-IT/terraform-action/issues/56)) ([86d6efe](https://github.com/LBHackney-IT/terraform-action/commit/86d6efe7f9f5f8906fa59ea2db05f9ce597fbacb))
+
 ## [7.2.0](https://github.com/LBHackney-IT/terraform-action/compare/v7.1.0...v7.2.0) (2025-11-07)
 
 
