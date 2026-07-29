@@ -1,0 +1,152 @@
+###############################################################################
+# Collect Checkov findings across all repos in the org.
+#
+# Runs Checkov UNFILTERED — no config file, no severity filter, no skip list.
+# This measures the real backlog, not what the pipeline currently surfaces, so
+# counts here will be higher than a CI run. That is deliberate.
+#
+# Default: lists every non-archived repo the App can see, scans each one.
+# Empty repos (no .tf files) are skipped cleanly.
+#
+# Override: provide a comma-separated repo list to scan only specific repos —
+# useful for testing or targeted re-scans.
+#
+# Outputs uploaded as an artifact (90-day retention):
+#   findings.csv         one row per finding (FAILED and already-SKIPPED)
+#   summary.csv          aggregate counts per check × repo
+#   run-metadata.json    audit trail: repos scanned, skipped, failures
+#   repos.txt            the exact list scanned
+###############################################################################
+
+name: Collect Checkov findings
+
+on:
+  workflow_dispatch:
+    inputs:
+      repos_override:
+        description: "Comma-separated repo list to scan instead of all repos (leave blank to scan everything)"
+        required: false
+        default: ""
+        type: string
+      checkov_version:
+        description: "Checkov version"
+        required: false
+        default: "3.3.0"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240   # generous — 300 repos serial can take ~1-2 hours
+    
+    steps:
+      - name: Checkout collector
+        uses: actions/checkout@v4
+      
+      - name: Mint installation token
+        id: app_token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.CE_TF_APP_ID }}
+          private-key: ${{ secrets.CE_TF_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      
+      # -----------------------------------------------------------------
+      # Discover repos → write repos.txt in the workspace
+      # -----------------------------------------------------------------
+      
+      - name: Discover repos
+        id: discover
+        env:
+          GH_TOKEN: ${{ steps.app_token.outputs.token }}
+          ORG:      ${{ github.repository_owner }}
+          OVERRIDE: ${{ inputs.repos_override }}
+        run: |
+          set -euo pipefail
+          if [[ -n "$OVERRIDE" ]]; then
+            echo "Using override input — scanning specific repos only"
+            echo "$OVERRIDE" | tr ',' '\n' | sed 's/^ *//;s/ *$//' | grep -v '^$' > repos.txt
+          else
+            echo "Listing all non-archived repos in $ORG"
+            gh repo list "$ORG" \
+              --limit 1000 \
+              --no-archived \
+              --json nameWithOwner \
+              --jq '.[].nameWithOwner' > repos.txt
+          fi
+          count=$(wc -l < repos.txt)
+          echo "count=${count}" >> "$GITHUB_OUTPUT"
+          if [[ "$count" -eq 0 ]]; then
+            echo "::error::No repos discovered"
+            exit 1
+          fi
+          echo "Discovered ${count} repo(s)"
+          echo "::group::Full repo list"
+          cat repos.txt
+          echo "::endgroup::"
+      
+      - name: Install Checkov
+        run: pip install --quiet "checkov==${{ inputs.checkov_version }}"
+      
+      - name: Show tool versions
+        run: |
+          gh --version | head -1
+          jq --version
+          checkov --version
+      
+      - name: Run collector
+        env:
+          GH_TOKEN:         ${{ steps.app_token.outputs.token }}
+          ORG:              ${{ github.repository_owner }}
+          CHECKOV_VERSION:  ${{ inputs.checkov_version }}
+          REPORT_DIR:       ${{ github.workspace }}/checkov-reports
+        run: |
+          chmod +x scripts/collect-checkov-findings.sh
+          ./scripts/collect-checkov-findings.sh --list repos.txt
+      
+      - name: Write GitHub run summary
+        if: always()
+        run: |
+          {
+            echo "## Checkov findings collection"
+            echo ""
+            echo "**Repos discovered:** ${{ steps.discover.outputs.count }}"
+            if [[ -f checkov-reports/run-metadata.json ]]; then
+              echo "**Run time:** $(jq -r .run_time checkov-reports/run-metadata.json)"
+              echo "**Checkov version:** $(jq -r .checkov_version checkov-reports/run-metadata.json)"
+              echo "**Total findings:** $(jq -r .total_findings checkov-reports/run-metadata.json)"
+              echo "**Failing:** $(jq -r .total_failed checkov-reports/run-metadata.json)"
+              echo "**Already suppressed:** $(jq -r .total_skipped checkov-reports/run-metadata.json)"
+              echo "**Repos with no Terraform:** $(jq -r '.no_terraform | length' checkov-reports/run-metadata.json)"
+              echo "**Clone failures:** $(jq -r '.clone_failures | length' checkov-reports/run-metadata.json)"
+              echo "**Scan failures:** $(jq -r '.scan_failures | length' checkov-reports/run-metadata.json)"
+              echo ""
+              echo "### Top 10 checks"
+              echo ""
+              echo '| Count | Check |'
+              echo '|-------|-------|'
+              tail -n +2 checkov-reports/findings.csv | awk -F',' '{ print $6 }' | sort | uniq -c | sort -rn | head -10 \
+                | awk '{ count=$1; $1=""; sub(/^ /, ""); print "| "count" | `"$0"` |" }'
+              echo ""
+              echo "### Findings per repo (top 20)"
+              echo ""
+              echo '| Count | Repo |'
+              echo '|-------|------|'
+              tail -n +2 checkov-reports/findings.csv | awk -F',' '{ print $2 }' | sort | uniq -c | sort -rn | head -20 \
+                | awk '{ count=$1; $1=""; sub(/^ /, ""); print "| "count" | "$0" |" }'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+      
+      - name: Upload findings artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkov-findings-${{ github.run_number }}
+          path: |
+            checkov-reports/
+            repos.txt
+          retention-days: 90
+          if-no-files-found: warn
