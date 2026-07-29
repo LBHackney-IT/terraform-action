@@ -13,7 +13,7 @@
 #   ./collect-checkov-findings.sh --list repos.txt
 #
 # Env vars:
-#   ORG               GitHub org               (default: LBHackney-IT)
+#   ORG               GitHub org               (default: -IT)
 #   REPORT_DIR        output directory         (default: ./checkov-reports)
 #   GH_TOKEN          auth token (App or PAT)  (required for private repos)
 #   CHECKOV_VERSION   checkov version          (default: 3.3.0, reported only)
@@ -28,7 +28,7 @@
 
 set -euo pipefail
 
-ORG="${ORG:LBHackney-IT}"
+ORG="${ORG:-IT}"
 REPORT_DIR="${REPORT_DIR:-$PWD/checkov-reports}"
 CHECKOV_VERSION="${CHECKOV_VERSION:-3.3.0}"
 CHECKOV_ARGS="${CHECKOV_ARGS:---framework terraform --compact --soft-fail --download-external-modules false}"
