@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.0](https://github.com/LBHackney-IT/terraform-action/compare/v7.3.0...v7.4.0) (2026-07-29)
+
+
+### Features
+
+* adding checkov finding report for all repos ([#59](https://github.com/LBHackney-IT/terraform-action/issues/59)) ([10d641d](https://github.com/LBHackney-IT/terraform-action/commit/10d641d8bf891756e2fb70e4c764c0003b79d37b))
+
 ## [7.3.0](https://github.com/LBHackney-IT/terraform-action/compare/v7.2.0...v7.3.0) (2026-04-21)
 
 
