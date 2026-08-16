@@ -1,4 +1,5 @@
 name: Terraform AWS Action
+description: Action to run Terraform
 
 inputs:
   backend_config:
@@ -94,7 +95,7 @@ runs:
     - name: Terraform Plan
       id: plan
       if: inputs.plan == 'true'
-      run: terraform plan -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color -out=tfplan
+      run: terraform plan -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" ${{ inputs.cli_flags }} -input=false -no-color
       continue-on-error: true
       shell: bash
       working-directory: ${{ inputs.directory }}
@@ -138,12 +139,12 @@ runs:
 
     - name: Terraform Destroy
       if:  inputs.destroy == 'true'
-      run: terraform destroy -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" -input=false -no-color -auto-approve
+      run: terraform destroy -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" ${{ inputs.cli_flags }} -input=false -no-color -auto-approve
       shell: bash   
       working-directory: ${{ inputs.directory }}
 
     - name: Terraform Apply
       if: inputs.apply == 'true' && github.event_name != 'pull_request'
-      run: terraform apply -input=false -no-color -auto-approve tfplan
+      run: terraform apply -var-file='${{ inputs.vars_file }}' -var="repository_id=${{ github.repository_id }}" -var="repository=${{ github.repository }}" ${{ inputs.cli_flags }} -input=false -no-color -auto-approve
       shell: bash
       working-directory: ${{ inputs.directory }}
